@@ -39,18 +39,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-      super.initState();
+    super.initState();
 
-      ShakeDetector.autoStart(
-        onPhoneShake: () async {
-          await Gleap.open();
-          print('Gleap.open()');
-        },
-        shakeSlopTimeMS: 500,
-        shakeCountResetTime: 3000,
-        shakeThresholdGravity: 2.7,
-      );
+    ShakeDetector.autoStart(
+      onPhoneShake: () async {
+        await Gleap.open();
+        print('Gleap.open()');
+      },
+      shakeSlopTimeMS: 500,
+      shakeCountResetTime: 3000,
+      shakeThresholdGravity: 2.7,
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,11 +59,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            await MethodChannel('gleap_example',).invokeMethod('open');
-          },
-          child: Text('Open Native Activity'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                await const MethodChannel('gleap_example').invokeMethod('open');
+              },
+              child: const Text('Open Native Activity'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Gleap.open();
+              },
+              child: const Text('Open Gleap'),
+            ),
+          ],
         ),
       ),
     );
